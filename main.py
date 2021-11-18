@@ -4,13 +4,15 @@ from PyQt5 import uic
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QTableWidget, QTableWidgetItem,\
     QComboBox, QFormLayout, QHBoxLayout, QVBoxLayout, QSpinBox, QLabel
+from mainUI import Ui_Form
+from addEditForm import Ui_Form2
 
 
-class MyWidget(QWidget):
+class MyWidget(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
-        self.con = sqlite3.connect('coffee.sqlite')
+        self.setupUi(self)
+        self.con = sqlite3.connect('data/coffee.sqlite')
         self.cur = self.con.cursor()
         self.second = None
         self.drawTable()
@@ -50,11 +52,11 @@ class MyWidget(QWidget):
             self.second.show()
 
 
-class SecondForm(QWidget):
+class SecondForm(QWidget, Ui_Form2):
     def __init__(self, parent, row=None):
         super().__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
-        self.con = sqlite3.connect('coffee.sqlite')
+        self.setupUi(self)
+        self.con = sqlite3.connect('data/coffee.sqlite')
         self.cur = self.con.cursor()
         self.parent = parent
         if row:
